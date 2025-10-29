@@ -4,14 +4,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>About Me</h1>
-  <p>Hello! This is the About page of my first website. You can tell people more about yourself here!</p>
-  <nav>
-    <a href="index.html">Home</a> | 
-    <a href="about.html">About</a>
+  <!-- Hamburger -->
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Menu -->
+  <nav class="menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
   </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header>
+      <h1>About Me</h1>
+      <!-- Theme Toggle inside header -->
+      <div class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <span class="sun">☀️</span>
+        <span class="moon">🌙</span>
+        <span class="thumb"></span>
+      </div>
+    </header>
+
+    <main>
+      <p>Hello! I'm Kei Ashura, a budding web developer excited to learn and grow in this field. This is my first website, where I explore new skills and share my journey. I’m passionate about building creative and user-friendly web projects. Thanks for stopping by—feel free to explore and connect with me!</p>
+    </main>
+
+    <footer>
+      <p>© 2025 Kei Ashura. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      const hamburger = document.querySelector('.hamburger');
+      menu.classList.toggle('open');
+      hamburger.classList.toggle('active');
+    }
+
+    // Theme handling
+    function applyPreferredTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+        return;
+      }
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    applyPreferredTheme();
+  </script>
 </body>
+
 </html>

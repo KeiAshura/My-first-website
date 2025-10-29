@@ -4,28 +4,166 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My First Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <h1>Welcome to My First Website</h1>
-    <img src="profile.jpg" alt="My Profile" width="200">
-  </header>
 
-  <!-- Main content -->
-  <main>
-    <p>Hello! This is my first website. I'm learning web development and having fun!</p>
-    <nav>
-      <a href="index.html">Home</a> | 
-      <a href="about.html">About</a>
-    </nav>
-  </main>
+  <!-- Hamburger Button -->
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Kei Ashura. All rights reserved.</p>
-  </footer>
+  <!-- Sliding Menu -->
+  <nav class="menu">
+    <a href="#home" class="menu-link">Home</a>
+    <a href="#about" class="menu-link">About</a>
+    <a href="#projects" class="menu-link">Projects</a>
+    <a href="#contact" class="menu-link">Contact</a>
+  </nav>
+
+  <!-- Overlay -->
+  <div class="overlay" onclick="toggleMenu()"></div>
+
+  <!-- Main Content -->
+  <div class="container">
+
+    <div class="main-content">
+      <header id="home">
+        <h1>Welcome to My Website</h1>
+        <!-- Theme Toggle inside header -->
+        <div class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+          <span class="sun">☀️</span>
+          <span class="moon">🌙</span>
+          <span class="thumb"></span>
+        </div>
+        <img src="profile.jpg" alt="Profile Picture" width="200">
+      </header>
+
+      <main>
+        <!-- About Section -->
+        <section id="about" class="section">
+          <h2>About</h2>
+          <p>Hello! I'm Kei Ashura, a budding web developer excited to learn and grow. I enjoy building creative, user-friendly projects.</p>
+          <div class="about-grid">
+            <div class="card">
+              <h3>Skills</h3>
+              <ul>
+                <li>HTML,CSS & C++</li>
+                <li>JavaScript Basics</li>
+                <li>Responsive Design</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Hobbies</h3>
+              <ul>
+                <li>Design & UI</li>
+                <li>Reading manga/manhwa</li>
+                <li>Music & gaming</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+          <h2>Projects</h2>
+          <div class="projects-grid">
+            <div class="project-card">
+              <div class="project-thumb"></div>
+              <h3>Project One</h3>
+              <p>Simple landing page with responsive layout.</p>
+            </div>
+            <div class="project-card">
+              <div class="project-thumb"></div>
+              <h3>Project Two</h3>
+              <p>Hamburger menu and sliding sidebar.</p>
+            </div>
+            <div class="project-card">
+              <div class="project-thumb"></div>
+              <h3>Project Three</h3>
+              <p>Theme toggle with smooth animations.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+          <h2>Contact</h2>
+          <div class="contact-wrap">
+            <div class="links">
+              <a href="mailto:example@mail.com" class="chip">Email</a>
+              <a href="https://github.com/" target="_blank" class="chip">GitHub</a>
+              <a href="https://twitter.com/" target="_blank" class="chip">Twitter</a>
+            </div>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks! This is a demo form.');">
+              <div class="row">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Email" required>
+              </div>
+              <textarea rows="4" placeholder="Message" required></textarea>
+              <button type="submit">Send</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2025 Kei Ashura. All rights reserved.</p>
+        <div class="social">
+          <a href="https://github.com/" target="_blank" aria-label="GitHub">🐙</a>
+          <a href="https://twitter.com/" target="_blank" aria-label="Twitter">🐦</a>
+          <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn">💼</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.menu').classList.toggle('open');
+      document.querySelector('.overlay').classList.toggle('active');
+      document.querySelector('.hamburger').classList.toggle('active');
+    }
+
+    // Close menu on link click and smooth scroll
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.menu-link').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const href = a.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelector('.menu').classList.remove('open');
+            document.querySelector('.overlay').classList.remove('active');
+            document.querySelector('.hamburger').classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Theme handling
+    function applyPreferredTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+        return;
+      }
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    applyPreferredTheme();
+  </script>
 </body>
-
 </html>
