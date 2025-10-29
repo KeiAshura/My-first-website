@@ -28,4 +28,30 @@ nav a {
 nav a:hover {
   color: #ff6600;
 }
+/* Header styling */
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #e0f7fa;
+}
+
+header img {
+  border-radius: 50%; /* makes the image circular */
+  margin-top: 10px;
+}
+
+/* Main content */
+main {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* Footer styling */
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #e0f7fa;
+  margin-top: 40px;
+}
 
