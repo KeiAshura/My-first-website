@@ -13,3 +13,19 @@ p {
   font-size: 18px;
   color: #333;
 }
+
+nav {
+  margin-top: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #005f99;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+nav a:hover {
+  color: #ff6600;
+}
+
